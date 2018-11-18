@@ -27,6 +27,9 @@ setup(
     ],
     package_dir={'cwltiny':
                  'cwltiny'},
+    entry_points={
+        'console_scripts': ['cwltiny=cwltiny.cwltiny:main']
+    },
     include_package_data=True,
     license="Apache Software License 2.0",
     zip_safe=False,
