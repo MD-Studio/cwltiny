@@ -297,16 +297,16 @@ def execute_clt(workdir_path, in_out, base_command, command_line):
     if base_command is not None:
         command_line.insert(0, base_command)
 
-    stdin_file = None
+    stdin_file = subprocess.DEVNULL
     if in_out['stdin'] is not None:
         stdin_path = os.path.join(workdir_path, in_out['stdin'])
         stdin_file = open(stdin_path, 'rb')
-    stdout_file = None
+    stdout_file = subprocess.DEVNULL
     if in_out['stdout'] is not None:
         stdout_path = os.path.join(workdir_path, in_out['stdout'])
         log("Writing stdout to " + stdout_path)
         stdout_file = open(stdout_path, 'wb')
-    stderr_file = None
+    stderr_file = subprocess.DEVNULL
     if in_out['stderr'] is not None:
         stderr_path = os.path.join(workdir_path, in_out['stderr'])
         stderr_file = open(stderr_path, 'wb')
