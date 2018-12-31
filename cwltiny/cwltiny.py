@@ -527,16 +527,17 @@ def resolve_step_inputs(step, workflow_dict, input_dict):
     if 'cwltiny_input_values' not in step:
         step['cwltiny_input_values'] = {}
 
-    for step_input in step['in']:
-        value = None
-        if 'source' in step_input:
-            value, ready = resolve_output_reference(step_input['source'], workflow_dict, input_dict)
+    if 'in' in step:
+        for step_input in step['in']:
+            value = None
+            if 'source' in step_input:
+                value, ready = resolve_output_reference(step_input['source'], workflow_dict, input_dict)
 
-        log("Resolved step '{}' input '{}' to {}".format(step['id'], step_input['id'], json.dumps(value, indent=4)))
+            log("Resolved step '{}' input '{}' to {}".format(step['id'], step_input['id'], json.dumps(value, indent=4)))
 
-        step['cwltiny_input_values'][step_input['id']] = value
-        if not ready:
-            all_bound = False
+            step['cwltiny_input_values'][step_input['id']] = value
+            if not ready:
+                all_bound = False
 
     return all_bound
 
@@ -600,6 +601,7 @@ def run_workflow(workdir_path, workflow_dict, input_dict):
     """
     normalise_workflow(workflow_dict)
     log("Normalised workflow: " + json.dumps(workflow_dict, indent=4))
+    log("Input: " + json.dumps(input_dict, indent=4))
     has_error = False
     while has_unexecuted_steps(workflow_dict) and not has_error:
         for step in workflow_dict['steps']:
