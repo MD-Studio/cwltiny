@@ -226,11 +226,12 @@ def create_argument(parameter, input_dict):
 
         # produce argument
         if is_array:
+            if par_type == 'File':
+                value = list(map(lambda x: x['path'], value))
+            else:
+                value = list(map(str, value))
+
             if item_separator:
-                if par_type == 'File':
-                    value_strings = list(map(lambda x: x['path'], value))
-                else:
-                    value_strings = list(map(lambda x: str(x), value))
                 value = [item_separator.join(value_strings)]
         else:
             if par_type == 'File':
