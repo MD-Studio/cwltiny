@@ -532,7 +532,9 @@ def resolve_step_inputs(step, workflow_dict, input_dict):
 
     if 'in' in step:
         for step_input in step['in']:
-            value = None
+            value, ready = None, False
+            if 'default' in step_input:
+                value, ready = step_input['default'], True
             if 'source' in step_input:
                 value, ready = resolve_output_reference(step_input['source'], workflow_dict, input_dict)
 
